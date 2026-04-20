@@ -1,0 +1,1318 @@
+/* ===================================================
+   BAGEL & CO. — Redesigned Stylesheet
+   Base: #FFFFFF  |  Accent: #E84A0C  |  Dark: #111
+   Design inspiration: bold editorial bakery posters
+   =================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fredoka:wght@600;700&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;700&display=swap');
+
+/* ── Variables ── */
+:root {
+  --orange: #E84A0C;
+  --white: #F1F3F5; /* Switched to a sophisticated cool-gray that perfectly matches the image backgrounds */
+  --black: #111111;
+  --muted: #888;
+  --border: #E0DDD8;
+  --ff-disp: 'Bebas Neue', 'Arial Black', sans-serif;
+  --ff-pop: 'Fredoka', 'Noto Sans JP', sans-serif;
+  --ff-body: 'Noto Sans JP', 'Inter', system-ui, sans-serif;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --max: 1440px;
+  --site-gutter: 2.5rem; /* Standard site-wide horizontal margin */
+}
+
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--ff-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+.container {
+  width: min(var(--max), 100% - (var(--site-gutter) * 2));
+  margin-inline: auto;
+}
+
+/* ====================================================
+   NAVIGATION
+   ==================================================== */
+.site-nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 200;
+  padding: 1.8rem 0;
+  transition: padding .3s var(--ease), background .3s var(--ease);
+}
+
+.site-nav.scrolled {
+  background: rgba(17, 17, 17, .94);
+  backdrop-filter: blur(16px);
+  padding: .8rem 0;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: var(--ff-disp);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--black);
+  letter-spacing: -.01em;
+  transition: color .3s;
+}
+
+.nav-logo span {
+  color: var(--orange);
+}
+
+.site-nav.scrolled .nav-logo {
+  color: var(--white);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.nav-links a {
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, .5);
+  transition: color .2s;
+}
+
+.site-nav.scrolled .nav-links a {
+  color: var(--white);
+}
+
+.nav-links a:hover {
+  color: var(--orange);
+}
+
+/* ── Menu Toggle Button (Mobile) ── */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 300;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--black);
+  transition: transform .3s var(--ease), opacity .3s var(--ease);
+}
+
+.site-nav.scrolled .menu-toggle span {
+  background: var(--white);
+}
+
+/* Open State animation */
+.menu-toggle.is-active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.menu-toggle.is-active span:nth-child(2) {
+  opacity: 0;
+}
+.menu-toggle.is-active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+
+/* ====================================================
+   HERO — white left / black right split
+   Font: Fredoka (pop, rounded)
+   Image: right panel with black CSS bg hides JPG transparency artifact
+   ==================================================== */
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 700px;
+  background: var(--white);
+  overflow: hidden; /* タイトル・画像が画面外にはみ出さないよう制御 */
+}
+
+
+
+/* Hero image — transparent WebP/PNG floats naturally on white bg */
+.hero-img {
+  position: absolute;
+  z-index: 2;
+  right: -2%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 58%; /* Reverted to the original approved balance */
+  max-width: 880px;
+}
+
+/* hero-img の 480px ルールは下部のブレイクポイントブロックへ統合 */
+
+.hero-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero-content {
+  position: relative;
+  height: 100svh;
+  pointer-events: none;
+}
+
+.hero-content > * {
+  pointer-events: auto;
+}
+
+/* ──────────────────────────────────
+   WORD LAYERS — Typographic Lockup
+   ────────────────────────────────── */
+.hero-titles {
+  position: absolute;
+  top: 6svh;
+  left: 0;              /* Aligned to container edge */
+  z-index: 5;
+}
+
+.hero-word {
+  display: block;
+  margin: 0;
+  padding: 0;
+  transform: translateX(-0.03em); /* Optical correction for Bebas Neue side bearings */
+  font-family: var(--ff-disp);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  line-height: 0.85;
+  color: var(--orange);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Individual sizes ONLY */
+.hero-word-howto { font-size: clamp(4rem,  9vw,  11rem); }
+.hero-word-bagel { font-size: clamp(12rem, 26vw, 30rem); }
+.hero-word-it    { font-size: clamp(8rem,  18vw, 22rem); }
+
+/* ──────────────────────────────────
+   COPY — Editorial Tagline
+   ────────────────────────────────── */
+.hero-copy {
+  position: absolute;
+  z-index: 6;
+  left: 0;
+  top: 68svh;
+}
+
+.hero-h1 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.hero-tagline {
+  font-family: var(--ff-body);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(3rem, 5vw, 5rem);
+  color: var(--black);
+  line-height: 1.1;
+  letter-spacing: .02em;
+}
+
+
+/* ──────────────────────────────────
+   ACTIONS — Scroll indicator, etc.
+   ────────────────────────────────── */
+.hero-actions {
+  position: absolute;
+  z-index: 7;
+  right: 0;             /* Aligned to container edge (end) */
+  bottom: 6%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.2rem;
+}
+
+.btn-dark {
+  background: var(--black);
+  color: var(--white);
+  padding: .85em 2.2em;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  transition: background .2s, color .2s, transform .2s;
+}
+
+.btn-dark:hover {
+  background: var(--orange);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+
+
+/* ── hero bar removed — copy block has built-in gradient ── */
+
+
+/* ====================================================
+   MENU — white, editorial, vast images + annotations
+   Inspired by bagel2.jpg (kanelsnegl layout)
+   ==================================================== */
+/* ====================================================
+   COMMON SECTION HEADERS
+   ==================================================== */
+.section-statement {
+  background: var(--white);
+  padding: calc(clamp(3rem, 10vw, 10rem) - 6svh) 0 0;
+  text-align: left;
+  position: relative;
+  z-index: 10;
+}
+
+.statement-txt {
+  font-size: clamp(.95rem, 1.3vw, 1.15rem);
+  color: rgba(0, 0, 0, .5);
+  line-height: 2;
+}
+
+.section-header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4rem;
+  margin-bottom: 8rem;
+}
+
+.section-overline {
+  display: block;
+  margin-bottom: 2rem; /* Expanded for better vertical rhythm, matching item names */
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.section-title {
+  font-family: var(--ff-disp);
+  font-size: clamp(3.2rem, 6vw, 6.4rem);
+  font-weight: 900;
+  line-height: .88;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: var(--black);
+}
+
+.section-title em {
+  font-family: var(--ff-body);
+  font-style: italic;
+  font-size: clamp(1.8rem, 3.5vw, 4.2rem);
+  font-weight: 300;
+  color: var(--orange);
+  display: block;
+  letter-spacing: .04em;
+  margin-top: .3rem;
+}
+
+/* ──────────────────────────────────
+   MENU Specifics
+   ────────────────────────────────── */
+.section-menu {
+  background: var(--white);
+  padding: clamp(3rem, 10vw, 10rem) 0 clamp(3rem, 8vw, 6rem);
+}
+
+.menu-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.menu-view-all {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--black);
+  border-bottom: 1.5px solid var(--orange);
+  padding-bottom: .15em;
+  transition: color .2s;
+  align-self: flex-end;
+}
+
+.menu-view-all:hover {
+  color: var(--orange);
+}
+
+/* ── Item layout: alternates left/right ── */
+.menu-item {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 4rem;
+  align-items: center;
+  padding-bottom: 10rem;
+  position: relative;
+}
+
+.menu-item:nth-child(even) {
+  direction: rtl;
+}
+
+.menu-item:nth-child(even)>* {
+  direction: ltr;
+}
+
+/* Product image column */
+.item-visual {
+  position: relative;
+}
+
+/* The product image — single combined shot */
+.item-img-top {
+  position: relative;
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.item-img-top img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 12px 40px rgba(0, 0, 0, .12));
+}
+
+/* Product copy column */
+.item-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.item-num {
+  font-family: var(--ff-disp);
+  font-size: 9rem;
+  font-weight: 900;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.06); /* Adjusted for better visibility on #F1F3F5 */
+  letter-spacing: .02em;
+  user-select: none;
+  margin-bottom: -2rem;
+}
+
+.item-subtitle {
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.item-name-jp {
+  font-family: var(--ff-disp);
+  font-size: clamp(2.8rem, 5vw, 5.5rem);
+  font-weight: 900;
+  line-height: .92;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: var(--black);
+}
+
+.item-name-en {
+  font-family: var(--ff-body);
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--orange);
+  letter-spacing: .06em;
+}
+
+.item-desc {
+  font-size: .88rem;
+  line-height: 2;
+  color: #555;
+  max-width: 100%;
+}
+
+/* Feature tags list */
+.item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+}
+
+.item-tag {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--black);
+  border: 1.5px solid var(--border);
+  border-radius: 2px;
+  padding: .3em .8em;
+}
+
+.item-price {
+  font-family: var(--ff-disp);
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: var(--black);
+  line-height: 1;
+}
+
+.item-price sup {
+  font-size: 1.2rem;
+  font-weight: 400;
+  vertical-align: super;
+  font-family: var(--ff-body);
+}
+
+/* Dotted size ruler */
+.item-ruler {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.item-ruler span {
+  font-size: .62rem;
+  letter-spacing: .1em;
+  color: var(--muted);
+}
+
+.ruler-dots {
+  flex: 1;
+  height: 0;
+  border-bottom: 1.5px dotted var(--border);
+  max-width: 120px;
+}
+
+/* Divider between items */
+.menu-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin-bottom: 10rem;
+}
+
+
+/* ====================================================
+   PHILOSOPHY — white base, bold type, large numbers
+   ==================================================== */
+.section-philosophy {
+  background: var(--white);
+  padding: 0 0 10rem;
+  overflow: hidden;
+}
+
+/* Full-width orange accent bar at top */
+.phil-bar {
+  background: var(--orange);
+  padding: 1.4rem 0;
+  overflow: hidden;
+  margin-bottom: 8rem;
+}
+
+.phil-bar-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 40s linear infinite;
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.phil-bar-track span {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--white);
+  white-space: nowrap;
+  padding-right: 3rem;
+}
+
+.phil-bar-track span b {
+  opacity: .5;
+  padding: 0 1rem;
+  font-weight: 400;
+}
+
+.phil-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr; /* Slightly adjust ratio for better balance with zero padding */
+  gap: 4rem; /* Use clear gaps instead of individual padding */
+}
+
+.phil-left {
+  border-right: 1px solid var(--border);
+  padding-right: 4rem; /* Restored to original approved value */
+}
+
+/* PHILOSOPHY - content classes remain, headers unified */
+.phil-lead-content {
+  max-width: 80%;
+  margin-bottom: 4rem;
+  line-height: 2.1;
+  color: #555;
+  font-size: .95rem;
+}
+
+.phil-lead-primary {
+  font-family: var(--ff-body);
+  font-weight: 700;
+  color: var(--black);
+  font-size: 1.15rem;
+  margin-bottom: 0.6rem;
+}
+
+.phil-lead-secondary {
+  margin-bottom: 1.8rem;
+}
+
+.phil-lead-text {
+  margin-bottom: 1rem;
+}
+
+/* Bold stats grid — like bagel3.jpg number blocks */
+.phil-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+
+.phil-stat {
+  padding: 2rem 1.5rem;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.phil-stat-num {
+  font-family: var(--ff-disp);
+  font-size: clamp(2.5rem, 4vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--black);
+  letter-spacing: .02em;
+  margin-bottom: .5rem;
+}
+
+.phil-stat-num em {
+  color: var(--orange);
+  font-style: normal;
+}
+
+.phil-stat-label {
+  font-size: .62rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  color: var(--muted);
+}
+
+.phil-right {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.phil-item {}
+
+.phil-item-num {
+  font-family: var(--ff-disp);
+  font-size: 5rem;
+  font-weight: 900;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.06);
+  letter-spacing: .02em;
+  margin-bottom: 1rem;
+  user-select: none;
+}
+
+.phil-item h3 {
+  font-family: var(--ff-body);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: .8rem;
+  border-bottom: 1.5px solid var(--orange);
+  display: inline-block;
+  padding-bottom: .2em;
+  letter-spacing: .04em;
+}
+
+.phil-item p {
+  font-size: .85rem;
+  line-height: 2;
+  color: #666;
+  max-width: 100%; /* Removed restrictive character limit to reduce right-side empty space */
+}
+
+
+/* ====================================================
+   STORE INFO
+   ==================================================== */
+.section-store {
+  background: var(--white);
+  padding: 8rem 0 10rem;
+  border-top: 1px solid var(--border);
+}
+
+.store-body {
+  display: grid;
+  grid-template-columns: 5fr 4fr;
+  gap: 6rem;
+  align-items: start;
+}
+
+.map-wrap {
+  position: sticky;
+  top: 7rem;
+  border-radius: 0;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  background: var(--off);
+}
+
+.map-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.store-table {
+  /* border-top removed */
+}
+
+.store-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 2rem;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--border);
+  align-items: baseline;
+}
+
+.store-row dt {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.store-row dd {
+  font-size: .88rem;
+  line-height: 1.9;
+  color: var(--black);
+}
+
+.store-row dd strong {
+  color: var(--orange);
+  font-weight: 700;
+}
+
+.store-note {
+  font-size: .75rem;
+  color: var(--muted);
+  margin-top: .4rem;
+}
+
+
+/* ====================================================
+   FOOTER
+   ==================================================== */
+.site-footer {
+  background: var(--black);
+  padding: 5rem 0 3rem;
+}
+
+.footer-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding-bottom: 2rem;
+}
+
+.footer-brand-logo {
+  font-family: var(--ff-disp);
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--white);
+  display: block;
+  margin-bottom: 1.2rem;
+}
+
+.footer-brand-logo span {
+  color: var(--orange);
+}
+
+.footer-brand p {
+  font-size: .78rem;
+  color: #fff;
+  line-height: 2;
+  max-width: 60ch;
+}
+
+.footer-col h4 {
+  font-size: .6rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .35);
+  font-weight: 600;
+  margin-bottom: 1.4rem;
+}
+
+.footer-col ul {
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+}
+
+.footer-col a {
+  font-size: .82rem;
+  color: #fff;
+  transition: color .2s;
+}
+
+.footer-col a:hover {
+  color: var(--orange);
+}
+
+.footer-bottom {
+  padding-top: 1.5rem;
+}
+
+.footer-bottom p {
+  font-size: .68rem;
+  color: #fff;
+}
+
+/* ====================================================
+   SCROLL REVEAL
+   ==================================================== */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity .75s var(--ease), transform .75s var(--ease);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+[data-reveal][data-d="1"] {
+  transition-delay: .1s;
+}
+
+[data-reveal][data-d="2"] {
+  transition-delay: .22s;
+}
+
+[data-reveal][data-d="3"] {
+  transition-delay: .34s;
+}
+
+[data-reveal][data-d="4"] {
+  transition-delay: .46s;
+}
+
+/* ====================================================
+   FULL MENU PAGE (BASE - 1025px-1440px)
+   ==================================================== */
+.full-menu {
+  padding: 16rem 0 14rem; /* Increased significantly for section recognition */
+  background-color: var(--white);
+}
+
+.full-menu__container {
+  display: flex;
+  gap: 3rem;
+}
+
+.full-menu__sidebar {
+  flex-shrink: 0;
+}
+
+/* --- Shared Styles for Index --- */
+.full-menu__index {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1.2rem !important;
+  writing-mode: horizontal-tb !important; /* スマホを基準にし、PCは後で上書きする */
+  flex-direction: row !important;
+  position: static;
+  margin-bottom: 2.5rem;
+}
+
+/* --- PC & Tablet Overrides (769px or more) --- */
+@media (min-width: 769px) {
+  .full-menu__index {
+    writing-mode: vertical-rl !important;
+    text-orientation: mixed !important;
+    flex-direction: row !important; /* Claudeのご指示通り、vertical-rlの時はrow */
+    position: sticky !important;
+    top: 10rem !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+.full-menu__index-sub {
+  font-family: var(--ff-disp);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.full-menu__index-line {
+  display: block !important;
+  background-color: var(--border) !important;
+  flex-shrink: 0;
+}
+
+/* Line style for Mobile (Default) */
+.full-menu__index-line {
+  width: 30px !important;
+  height: 1px !important;
+  margin: 0 0.8rem !important;
+}
+
+/* Line style for PC/Tablet */
+@media (min-width: 769px) {
+  .full-menu__index-line {
+    width: 1px !important;
+    height: 60px !important;
+    margin: 1rem 0 !important;
+  }
+}
+
+.full-menu__index-label {
+  font-family: var(--ff-disp);
+  font-size: clamp(3rem, 6vw, 6rem);
+  font-weight: 900;
+  color: var(--black);
+  line-height: .9;
+  letter-spacing: .02em;
+  flex-shrink: 0;
+}
+
+.full-menu__grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem 3.5rem; /* Reduced row gap from 3.6rem to 2rem */
+}
+
+.full-menu__item {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: 0;
+  padding-bottom: 3rem; /* Reduced from 4.5rem */
+}
+
+.full-menu__image-box {
+  background: transparent; /* Allow the site background to show through the transparent WebP images */
+  aspect-ratio: 1 / 1;
+  margin-bottom: 0; /* Removed spacing between image and text */
+  overflow: visible;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4%;
+}
+
+.full-menu__image-box img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  transition: transform .6s var(--ease);
+}
+
+.full-menu__item:hover .full-menu__image-box img {
+  transform: scale(1.08);
+}
+
+.full-menu__caption-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  position: absolute;
+  top: 82%; /* Tightened to overlap slightly or touch the image contour */
+  left: 50%;
+  transform: translateX(-2.5rem) rotate(-30deg);
+  transform-origin: left top;
+  z-index: 10;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: transform .4s var(--ease);
+}
+
+.full-menu__item:hover .full-menu__caption-row {
+  transform: translateX(-1.5rem) rotate(-25deg);
+}
+
+.full-menu__number {
+  font-family: var(--ff-disp);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--black);
+}
+
+.full-menu__sep {
+  font-size: 1.2rem;
+  color: var(--border);
+  font-weight: 300;
+}
+
+.full-menu__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem; /* Slightly more breathable uniform gap */
+  line-height: 1.1;
+}
+
+.full-menu__name-jp {
+  font-family: var(--ff-disp);
+  font-size: 1rem;
+  font-weight: 700; /* Changed from 900 to 700 */
+  color: var(--black);
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.full-menu__brand {
+  font-family: var(--ff-body);
+  font-size: 1rem; /* 元のサイズに戻します */
+  font-weight: 300;
+  font-style: italic;
+  color: var(--orange);
+  letter-spacing: 0.04em;
+}
+
+.full-menu__price {
+  font-family: var(--ff-disp);
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--black);
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+/* ====================================================
+   RESPONSIVE BREAKPOINTS
+   ==================================================== */
+
+/* ──────────────────────────────────
+   LEVEL 1: 大画面デスクトップ (≥ 1441px)
+   ────────────────────────────────── */
+@media (min-width: 1441px) {
+  .hero-word-howto { font-size: 10rem; }
+  .hero-word-bagel { font-size: 26rem; }
+  .hero-word-it    { font-size: 18rem; }
+}
+
+/* ──────────────────────────────────
+   LEVEL 2: タブレット・デスクトップ (≤ 1024px)
+   ────────────────────────────────── */
+@media (max-width: 1024px) {
+  /* Core Styles */
+  .hero-copy {
+    top: calc(6svh + 38vw);
+  }
+  .section-statement {
+    padding-top: calc(5rem - 6svh);
+  }
+  .section-menu {
+    padding-top: 5rem;
+  }
+  .menu-toggle {
+    display: flex;
+  }
+  .nav-links {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100svh;
+    background: rgba(0, 0, 0, 0.82);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3.5rem;
+    z-index: 250;
+    opacity: 0;
+    visibility: hidden;
+    display: flex;
+  }
+  .nav-links.is-animating {
+    transition: opacity .4s var(--ease), visibility .4s var(--ease);
+  }
+  .nav-links.is-active {
+    opacity: 1;
+    visibility: visible;
+  }
+  .nav-links a {
+    font-size: 1.5rem;
+    font-family: var(--ff-body);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--white);
+    width: 100%;
+    text-align: center;
+    letter-spacing: .12rem;
+  }
+  .menu-toggle.is-active span {
+    background: var(--white) !important;
+  }
+  .hero-h1 .line-lg {
+    font-size: clamp(3.5rem, 16vw, 7rem);
+  }
+  .hero-h1 .line-it {
+    font-size: clamp(2.8rem, 12vw, 5.5rem);
+  }
+  .hero-bagel--a {
+    width: 55vw;
+  }
+  .hero-bagel--b {
+    width: 40vw;
+    right: 5%;
+  }
+  .menu-title {
+    font-size: clamp(2.5rem, 10vw, 6rem);
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .phil-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .phil-lead-content {
+    max-width: 100%;
+  }
+
+  /* Full Menu Styles */
+  .full-menu {
+    padding: 12rem 0 10rem;
+  }
+  .full-menu__container {
+    gap: 2rem;
+  }
+  .full-menu__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem 2rem;
+  }
+  .full-menu__caption-row {
+    left: 40%;
+    transform: translateX(-1rem) rotate(-30deg);
+  }
+}
+
+/* ──────────────────────────────────
+   LEVEL 3: スマートフォン・タブレット縦 (≤ 768px)
+   ────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Core Styles */
+  .hero-copy {
+    top: calc(6svh + 17rem);
+  }
+  .hero-actions {
+    bottom: 3svh;
+  }
+  .container {
+    width: calc(100% - 2.4rem);
+  }
+  .section-header {
+    padding-bottom: 2rem;
+    margin-bottom: 3rem;
+  }
+  .section-statement {
+    padding-top: calc(3rem - 6svh);
+  }
+  .section-menu {
+    padding: 4rem 0;
+  }
+  .menu-item {
+    padding-bottom: 4rem;
+    display: flex !important;
+    flex-direction: column-reverse;
+    gap: 0;
+  }
+  .menu-divider {
+    margin-bottom: 4rem;
+  }
+  .phil-grid,
+  .store-body {
+    grid-template-columns: 1fr !important;
+  }
+  .menu-item:nth-child(even) {
+    direction: ltr !important;
+  }
+  .item-copy {
+    padding: 0 0 3rem !important;
+  }
+  .section-philosophy {
+    padding-bottom: 4rem;
+  }
+  .phil-bar {
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
+  .phil-left {
+    border-right: none !important;
+    padding-right: 0 !important;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2.5rem;
+    margin-bottom: 0;
+  }
+  .phil-right {
+    padding-left: 0 !important;
+    margin-top: 0;
+  }
+  .phil-item p {
+    max-width: none !important;
+  }
+  .section-store {
+    padding: 4rem 0;
+  }
+  .map-wrap {
+    position: static !important;
+    aspect-ratio: 16/9;
+  }
+  .site-footer {
+    padding: 3rem 0 2rem;
+  }
+  .item-img-top {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .ann {
+    display: none !important;
+  }
+  .section-overline {
+    margin-bottom: .8rem;
+  }
+  .section-title {
+    font-size: clamp(2.4rem, 8vw, 3.6rem);
+  }
+  .item-num {
+    font-size: 5rem !important;
+    margin-bottom: -1rem !important;
+  }
+  .item-subtitle {
+    font-size: .65rem !important;
+    letter-spacing: .15em !important;
+  }
+  .item-name-jp {
+    font-size: 2.2rem !important;
+    line-height: 1 !important;
+  }
+  .item-name-en {
+    font-size: 1.1rem !important;
+    line-height: 1.2 !important;
+    margin-top: .2rem;
+  }
+  .item-desc {
+    max-width: none !important;
+  }
+
+
+  /* Full Menu Styles (Moved from 768px for single-column logic) */
+  .full-menu {
+    padding: 10rem 0 8rem;
+  }
+  .full-menu__container {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  /* .full-menu__index mobile styles removed from here, now in base above */
+  .full-menu__index-label {
+    font-size: 3.2rem;
+  }
+  .full-menu__grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .full-menu__item {
+    margin-bottom: 0;
+    padding: 0 4%;
+  }
+  .full-menu__image-box {
+    padding: 0;
+    margin-bottom: 0;
+  }
+  .full-menu__caption-row {
+    position: static;
+    transform: none !important;
+    margin-top: 0;
+    padding-bottom: 2rem;
+  }
+  .full-menu__number {
+    font-size: 1.2rem;
+  }
+  .full-menu__sep {
+    font-size: 1rem;
+  }
+}
