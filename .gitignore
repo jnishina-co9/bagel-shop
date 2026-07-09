@@ -1,4 +1,6 @@
 .agents/
+.agent/
 Thumbs.db
 .DS_Store
 *.log
+*.md
